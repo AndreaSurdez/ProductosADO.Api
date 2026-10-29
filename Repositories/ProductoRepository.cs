@@ -7,8 +7,6 @@ namespace ProductosADO.Api.Repositories
     {
         private readonly string _connectionString;
 
-        // Este es el patrón de Inyección de Dependencias. 
-        // No hardcodeamos la conexión, la leemos de Program.cs / appsettings.json
         public ProductoRepository(IConfiguration config)
         {
             _connectionString = config.GetConnectionString("DefaultConnection")!;
@@ -16,7 +14,6 @@ namespace ProductosADO.Api.Repositories
 
         private MySqlConnection GetConnection() => new MySqlConnection(_connectionString);
 
-        // CONEXION + CONSULTA GENERAL
         // Aquí se aplica el flujo de ADO.NET: Abrir conexión -> Crear comando -> Ejecutar Reader -> Mapear -> Cerrar conexión
         public List<Producto> ObtenerTodos()
         {
@@ -129,7 +126,6 @@ namespace ProductosADO.Api.Repositories
             }
         }
 
-        // Helper para no repetir código de mapeo
         private Producto MapearProducto(MySqlDataReader r)
         {
             return new Producto
